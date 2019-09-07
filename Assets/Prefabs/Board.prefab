@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4720219816715223609}
   - component: {fileID: 4033215232203763210}
+  - component: {fileID: 5135789899201522970}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
@@ -58,6 +59,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10, y: 10}
   m_EdgeRadius: 0
+--- !u!114 &5135789899201522970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4720219816715223608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1f7ce5868525d6488e5cfb91e91ee25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boardStep: 3.33
+  crossSprite: {fileID: 7344849739491540448, guid: 6a3fb336ffaa4b741b4494b6e3783fed,
+    type: 3}
+  zeroSprite: {fileID: 705121462376917284, guid: 0c2b4aed3c166ed4f81ae65ab162f3c2,
+    type: 3}
 --- !u!1 &4720219817139118219
 GameObject:
   m_ObjectHideFlags: 0
@@ -69,7 +87,7 @@ GameObject:
   - component: {fileID: 4720219817139118217}
   - component: {fileID: 4720219817139118216}
   m_Layer: 0
-  m_Name: sprite
+  m_Name: boardSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
