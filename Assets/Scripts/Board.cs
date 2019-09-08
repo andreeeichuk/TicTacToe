@@ -15,19 +15,13 @@ public class Board : MonoBehaviour
 
     private List<GameObject> signs = new List<GameObject>();
 
-    private void OnEnable()
+    private void Awake()
     {
         Game.Instance.board = this;
         scaleFactor = referenceAspect / (Screen.height / (float)Screen.width);
         transform.localScale = transform.localScale * scaleFactor;
         origin = transform.position - new Vector3(boardStep, boardStep);
         boardStep *= scaleFactor;
-    }    
-
-    [ContextMenu("PlaceCross")]
-    public void PlaceCrossAtOrigin()
-    {
-        Instantiate(crossSprite, origin, Quaternion.identity, transform);
     }
 
     public void PlaceSign(int signIndex, int x, int y)

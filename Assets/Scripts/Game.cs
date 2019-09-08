@@ -55,7 +55,10 @@ public class Game : MonoBehaviour
     {
         if(playerSign==makingMoveSign)
         {
-            MakePlayerMove(coordinates);           
+            if (boardGrid.cells[coordinates.x, coordinates.y] == 0)
+            {
+                MakePlayerMove(coordinates);
+            }
         }
     }
 
