@@ -53,6 +53,19 @@ public class Game : MonoBehaviour
         }
     }
 
+    private void NextMove()
+    {
+        if(makingMoveSign==aiSign)
+        {
+            MakeAiMove();
+        }
+    }
+
+    private void MakeAiMove()
+    {
+
+    }
+
     private void MakePlayerMove(Coordinates coordinates)
     {
         board.PlaceSign(playerSign, coordinates.x, coordinates.y);
@@ -64,6 +77,13 @@ public class Game : MonoBehaviour
 
     private void CheckWin()
     {
+        int result = boardGrid.CheckWinner();
 
+        switch(result)
+        {
+            case -1:
+                NextMove();
+                break;
+        }
     }
 }
