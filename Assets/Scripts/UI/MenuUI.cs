@@ -31,6 +31,6 @@ public class MenuUI : MonoBehaviour
 
     public void ChooseDifficulty(int difficulty)
     {
-        Game.Instance.StartNewGame((Difficulty)difficulty);
+        Game.Instance.StartNewGame(difficulty);
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,17 +22,27 @@ public class Game : MonoBehaviour
         }        
     }
 
+    public event Action<int> Win;
+    public event Action<int> Draw;
+    public event Action<int> Loss;
+
     public Board board;
 
     private BoardGrid boardGrid;
 
-    private Difficulty currentDifficulty;
+    private int currentDifficulty;
 
     private int playerSign;
     private int aiSign;
     private int makingMoveSign;
 
-    public void StartNewGame(Difficulty difficulty)
+    private int wins;
+    private int draws;
+    private int losses;
+
+    private int winnerSign;
+
+    public void StartNewGame(int difficulty)
     {
         boardGrid = new BoardGrid();
 
@@ -42,8 +51,45 @@ public class Game : MonoBehaviour
         aiSign = 2;
         makingMoveSign = 1;
 
+        wins = 0;
+        draws = 0;
+        losses = 0;
+
         SceneManager.LoadScene("GameScene");
         SceneManager.sceneLoaded += GameReady;        
+    }
+
+    public void NextRound()
+    {
+        board.ClearBoard();
+        boardGrid.ClearBoardGrid();
+        makingMoveSign = 1;
+
+        if(playerSign==winnerSign)
+        {
+            playerSign = 1;
+            aiSign = 2;
+        }
+        else if(aiSign==winnerSign)
+        {
+            aiSign = 1;
+            playerSign = 2;
+        }
+        else
+        {
+            int t = playerSign;
+            playerSign = aiSign;
+            aiSign = t;
+        }
+
+        winnerSign = 0;
+
+        NextMove();
+    }
+
+    public void ExitGame()
+    {
+        SceneManager.LoadScene("MenuScene");
     }
 
     private void GameReady(Scene gameScene, LoadSceneMode loadSceneMode)
@@ -102,6 +148,24 @@ public class Game : MonoBehaviour
         {
             case -1:
                 NextMove();
+                break;
+            case 0:
+                draws++;
+                Draw(draws);
+                break;
+            case 1:
+            case 2:
+                winnerSign = result;
+                if (playerSign == result)
+                {
+                    wins++;
+                    Win(wins);
+                }
+                else
+                {
+                    losses++;
+                    Loss(losses);
+                }
                 break;
         }
     }

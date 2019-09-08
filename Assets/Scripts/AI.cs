@@ -1,20 +1,22 @@
 ﻿using System;
-using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 public static class AI
 {
-    public static Coordinates GetBestMove(Difficulty difficulty, BoardGrid grid, int aiSign)
+    private static int[] turnsToConsider = new int[3] { 1, 3, 8};
+    
+    private static int currentDifficulty;
+
+    public static Coordinates GetBestMove(int difficulty, BoardGrid grid, int aiSign)
     {
-        int bestVal = -1000;
-        int opponentSign = 2;
+        currentDifficulty = difficulty;
 
-        if (aiSign==2)
-        {
-            bestVal = 1000;
-            opponentSign = 1;
-        }  
+        int opponentSign = aiSign == 1 ? 2 : 1;
 
-        Coordinates coordinates = new Coordinates(-1,-1);
+        Coordinates coordinates;
+
+        List<Move> moves = new List<Move>();
 
         for (int i = 0; i < grid.cells.GetLength(0); i++)
         {
@@ -28,24 +30,23 @@ public static class AI
 
                     grid.cells[i, j] = 0;
 
-                    if (aiSign==1 && moveVal > bestVal)
-                    {
-                        coordinates.x = i;
-                        coordinates.y = j;
-                        bestVal = moveVal;
-                    }
-
-                    if (aiSign == 2 && moveVal < bestVal)
-                    {
-                        coordinates.x = i;
-                        coordinates.y = j;
-                        bestVal = moveVal;
-                    }
+                    moves.Add(new Move(new Coordinates(i,j),moveVal));
                 }
             }
-        }
+        }        
 
-        UnityEngine.Debug.Log($"Best Move: {coordinates.x},{coordinates.y}");
+        if (aiSign == 1)
+        {
+            moves = moves.OrderByDescending(m => m.score).ToList();
+        }
+        else
+        {
+            moves = moves.OrderBy(m => m.score).ToList();
+        }       
+
+        List<Move> sameMoves = moves.Where(m => m.score == moves[0].score).ToList();
+               
+        coordinates = sameMoves[UnityEngine.Random.Range(0,sameMoves.Count)].coordinates;        
 
         return coordinates;
     }
@@ -64,7 +65,7 @@ public static class AI
             return score - depth;
         }
 
-        if(score == 0)
+        if(score == 0 || depth >= turnsToConsider[currentDifficulty])
         {
             return 0;
         }
