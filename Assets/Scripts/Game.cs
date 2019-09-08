@@ -25,25 +25,29 @@ public class Game : MonoBehaviour
 
     public Board board;
 
+    private BoardGrid boardGrid;
+
     private Difficulty currentDifficulty;
 
-    private int playerIndex;
-    private int aiIndex;
-    private int makingMoveIndex;
+    private int playerSign;
+    private int aiSign;
+    private int makingMoveSign;
 
     public void StartNewGame(Difficulty difficulty)
     {
+        boardGrid = new BoardGrid();
+
         currentDifficulty = difficulty;
-        playerIndex = 1;
-        aiIndex = 2;
-        makingMoveIndex = 1;
+        playerSign = 1;
+        aiSign = 2;
+        makingMoveSign = 1;
 
         SceneManager.LoadScene("GameScene");
     }
 
     public void TryPlacePlayerSign(Coordinates coordinates)
     {
-        if(playerIndex==makingMoveIndex)
+        if(playerSign==makingMoveSign)
         {
             MakePlayerMove(coordinates);           
         }
@@ -51,9 +55,9 @@ public class Game : MonoBehaviour
 
     private void MakePlayerMove(Coordinates coordinates)
     {
-        board.PlaceSign(playerIndex, coordinates.x, coordinates.y);
+        board.PlaceSign(playerSign, coordinates.x, coordinates.y);
 
-        makingMoveIndex = 2;
+        makingMoveSign = 2;
 
         CheckWin();
     }

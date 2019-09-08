@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections.Generic;
 
 public class Board : MonoBehaviour
 {
     public Camera cam;
     public float boardStep;
+    public GameObject[] signsPrefabs;
     public GameObject crossSprite;
     public GameObject zeroSprite;
 
@@ -31,20 +31,10 @@ public class Board : MonoBehaviour
         Instantiate(crossSprite, origin, Quaternion.identity, transform);
     }
 
-    public void PlaceSign(int playerIndex, int x, int y)
+    public void PlaceSign(int signIndex, int x, int y)
     {
-        switch(playerIndex)
-        {
-            case 1:
-                PlaceCross(x, y);
-                break;
-            case 2:
-                PlaceZero(x, y);
-                break;
-            default:
-                throw new ApplicationException("Impossible playerIndex");
-                
-        }
+        GameObject sign = Instantiate(signsPrefabs[signIndex-1], GetPlacePosition(x, y), Quaternion.identity, transform);
+        signs.Add(sign);
     }
 
     public void ClearBoard()
@@ -55,17 +45,7 @@ public class Board : MonoBehaviour
         }
 
         signs.Clear();
-    }
-
-    private void PlaceCross(int x, int y)
-    {
-        Instantiate(crossSprite, GetPlacePosition(x, y), Quaternion.identity, transform);
-    }
-
-    private void PlaceZero(int x, int y)
-    {
-        Instantiate(zeroSprite, GetPlacePosition(x, y), Quaternion.identity, transform);
-    }
+    }   
 
     private Vector3 GetPlacePosition(int x, int y)
     {
