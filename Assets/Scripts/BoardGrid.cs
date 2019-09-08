@@ -1,11 +1,6 @@
 ﻿public class BoardGrid
 {
-    private int[,] cells = new int[3,3];
-
-    public void SetCell(Coordinates coordinates, int sign)
-    {
-        cells[coordinates.x, coordinates.y] = sign;
-    }
+    public int[,] cells = new int[3,3];    
 
     public void ClearBoardGrid()
     {

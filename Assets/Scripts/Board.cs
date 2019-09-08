@@ -15,15 +15,14 @@ public class Board : MonoBehaviour
 
     private List<GameObject> signs = new List<GameObject>();
 
-    void Start()
+    private void OnEnable()
     {
         Game.Instance.board = this;
-
         scaleFactor = referenceAspect / (Screen.height / (float)Screen.width);
         transform.localScale = transform.localScale * scaleFactor;
         origin = transform.position - new Vector3(boardStep, boardStep);
         boardStep *= scaleFactor;
-    }
+    }    
 
     [ContextMenu("PlaceCross")]
     public void PlaceCrossAtOrigin()
@@ -57,6 +56,8 @@ public class Board : MonoBehaviour
         Vector3 clickPos = cam.ScreenToWorldPoint(Input.mousePosition);
 
         Coordinates clickCellCoordinates = GetCoordinatesByPosition(clickPos);
+
+        Debug.Log($"Mouse coord: {clickCellCoordinates.x},{clickCellCoordinates.y}");
 
         Game.Instance.TryPlacePlayerSign(clickCellCoordinates);
     }

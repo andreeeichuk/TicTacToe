@@ -43,6 +43,12 @@ public class Game : MonoBehaviour
         makingMoveSign = 1;
 
         SceneManager.LoadScene("GameScene");
+        SceneManager.sceneLoaded += GameReady;        
+    }
+
+    private void GameReady(Scene gameScene, LoadSceneMode loadSceneMode)
+    {
+        NextMove();
     }
 
     public void TryPlacePlayerSign(Coordinates coordinates)
@@ -63,14 +69,24 @@ public class Game : MonoBehaviour
 
     private void MakeAiMove()
     {
+        Coordinates aiMove = AI.GetBestMove(currentDifficulty, boardGrid, aiSign);
 
+        boardGrid.cells[aiMove.x, aiMove.y] = aiSign;
+
+        board.PlaceSign(aiSign, aiMove.x, aiMove.y);
+
+        makingMoveSign = playerSign;
+
+        CheckWin();
     }
 
     private void MakePlayerMove(Coordinates coordinates)
     {
+        boardGrid.cells[coordinates.x, coordinates.y] = playerSign;
+
         board.PlaceSign(playerSign, coordinates.x, coordinates.y);
 
-        makingMoveSign = 2;
+        makingMoveSign = aiSign;
 
         CheckWin();
     }

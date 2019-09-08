@@ -189,9 +189,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5135789899201522970, guid: a7055323096ffc345b1e83797eb34d94,
         type: 3}
+      propertyPath: signsPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5135789899201522970, guid: a7055323096ffc345b1e83797eb34d94,
+        type: 3}
       propertyPath: cam
       value: 
       objectReference: {fileID: 1378201352}
+    - target: {fileID: 5135789899201522970, guid: a7055323096ffc345b1e83797eb34d94,
+        type: 3}
+      propertyPath: signsPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 7344849739491540448, guid: 6a3fb336ffaa4b741b4494b6e3783fed,
+        type: 3}
+    - target: {fileID: 5135789899201522970, guid: a7055323096ffc345b1e83797eb34d94,
+        type: 3}
+      propertyPath: signsPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 705121462376917284, guid: 0c2b4aed3c166ed4f81ae65ab162f3c2,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7055323096ffc345b1e83797eb34d94, type: 3}
 --- !u!1 &1378201350
