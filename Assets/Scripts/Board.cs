@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class Board : MonoBehaviour
 {
+    public Camera cam;
     public float boardStep;
     public GameObject crossSprite;
     public GameObject zeroSprite;
@@ -16,6 +17,8 @@ public class Board : MonoBehaviour
 
     void Start()
     {
+        Game.Instance.board = this;
+
         scaleFactor = referenceAspect / (Screen.height / (float)Screen.width);
         transform.localScale = transform.localScale * scaleFactor;
         origin = transform.position - new Vector3(boardStep, boardStep);
@@ -67,5 +70,22 @@ public class Board : MonoBehaviour
     private Vector3 GetPlacePosition(int x, int y)
     {
         return new Vector3(origin.x + x * boardStep, origin.y + y * boardStep);
+    }
+
+    private void OnMouseDown()
+    {
+        Vector3 clickPos = cam.ScreenToWorldPoint(Input.mousePosition);
+
+        Coordinates clickCellCoordinates = GetCoordinatesByPosition(clickPos);
+
+        Game.Instance.TryPlacePlayerSign(clickCellCoordinates);
+    }
+
+    Coordinates GetCoordinatesByPosition(Vector3 position)
+    {
+        int x = Mathf.RoundToInt((position.x - origin.x) / boardStep);
+        int y = Mathf.RoundToInt((position.y - origin.y) / boardStep);
+
+        return new Coordinates(x, y);
     }
 }
