@@ -6,11 +6,18 @@ public class Game : MonoBehaviour
 {
     private static Game instance;
 
+    private static bool applicationIsQuitting = false;
+
     public static Game Instance
     {
         get
         {
-            if(instance==null)
+            if (applicationIsQuitting)
+            {
+                return null;
+            }
+
+            if (instance==null)
             {
                 GameObject singletonGO = new GameObject();
                 instance = singletonGO.AddComponent<Game>();
@@ -26,7 +33,7 @@ public class Game : MonoBehaviour
     public event Action<int> Draw;
     public event Action<int> Loss;
 
-    public Board board;
+    public Board Board { get; set; }
 
     private BoardGrid boardGrid;
 
@@ -61,7 +68,7 @@ public class Game : MonoBehaviour
 
     public void NextRound()
     {
-        board.ClearBoard();
+        Board.ClearBoard();
         boardGrid.ClearBoardGrid();
         makingMoveSign = 1;
 
@@ -122,7 +129,7 @@ public class Game : MonoBehaviour
 
         boardGrid.cells[aiMove.x, aiMove.y] = aiSign;
 
-        board.PlaceSign(aiSign, aiMove.x, aiMove.y);
+        Board.PlaceSign(aiSign, aiMove.x, aiMove.y);
 
         makingMoveSign = playerSign;
 
@@ -133,7 +140,7 @@ public class Game : MonoBehaviour
     {
         boardGrid.cells[coordinates.x, coordinates.y] = playerSign;
 
-        board.PlaceSign(playerSign, coordinates.x, coordinates.y);
+        Board.PlaceSign(playerSign, coordinates.x, coordinates.y);
 
         makingMoveSign = aiSign;
 
@@ -168,5 +175,10 @@ public class Game : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    private void OnDestroy()
+    {
+        applicationIsQuitting = true;
     }
 }

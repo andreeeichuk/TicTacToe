@@ -23,29 +23,29 @@ public class GameUI : MonoBehaviour
         Game.Instance.ExitGame();
     }
 
-    public void UpdateWins(int winCount)
-    {
-        wins.text = "Wins: " + winCount;
-        ShowPopup("You Won!");
-    }
-
-    public void UpdateDraws(int drawCount)
-    {
-        draws.text = "Draws: " + drawCount;
-        ShowPopup("Draw!");
-    }
-
-    public void UpdateLosses(int lossesCount)
-    {
-        losses.text = "Losses: " + lossesCount;
-        ShowPopup("You Lost!");
-    }
-
     public void NextRound()
     {
         gameOverPopup.SetActive(false);
         Game.Instance.NextRound();
     }
+
+    private void UpdateWins(int winCount)
+    {
+        wins.text = "Wins: " + winCount;
+        ShowPopup("You Won!");
+    }
+
+    private void UpdateDraws(int drawCount)
+    {
+        draws.text = "Draws: " + drawCount;
+        ShowPopup("Draw!");
+    }
+
+    private void UpdateLosses(int lossesCount)
+    {
+        losses.text = "Losses: " + lossesCount;
+        ShowPopup("You Lost!");
+    }    
 
     private void ShowPopup(string message)
     {
@@ -55,8 +55,11 @@ public class GameUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        Game.Instance.Win -= UpdateWins;
-        Game.Instance.Draw -= UpdateDraws;
-        Game.Instance.Loss -= UpdateLosses;
+        if (Game.Instance != null)
+        {
+            Game.Instance.Win -= UpdateWins;
+            Game.Instance.Draw -= UpdateDraws;
+            Game.Instance.Loss -= UpdateLosses;
+        }
     }
 }

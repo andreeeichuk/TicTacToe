@@ -4,7 +4,7 @@ using System.Linq;
 
 public static class AI
 {
-    private static int[] turnsToConsider = new int[3] { 1, 3, 8};
+    private static int[] turnsToConsider = new int[3] { 1, 4, 9};
     
     private static int currentDifficulty;
 
